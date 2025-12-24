@@ -1,19 +1,31 @@
 pipeline {
-  agent any
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scm
-      }
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Pull code from GitHub
+                checkout scm
+            }
+        }
+
+        stage('Make script executable') {
+            steps {
+                sh 'chmod +x my-app/app.sh'
+            }
+        }
+
+        stage('Run script') {
+            steps {
+                sh './my-app/app.sh'
+            }
+        }
     }
-    stage('Run Shell Script') {
-      steps {
-        sh '''
-        chmod +x /my-app/app.sh
-        ./my-app/app.sh
-        '''
-      }
+
+    post {
+        always {
+            echo "Pipeline finished!"
+        }
     }
-  }
 }
 

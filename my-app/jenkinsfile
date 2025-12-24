@@ -1,0 +1,23 @@
+pipeline {
+    agent {
+        label 'ubuntu'   // Jenkins agent label for Ubuntu machine
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Run Shell Script') {
+            steps {
+                sh '''
+                    chmod +x script.sh
+                    ./script.sh
+                '''
+            }
+        }
+    }
+}
+
